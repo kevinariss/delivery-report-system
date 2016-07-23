@@ -1,8 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Data;
 
@@ -129,8 +124,7 @@ namespace Database_Controls
         }
         private SQLiteConnection sqliteConnection()
         {
-        //return new SQLiteConnection(@"Data Source=G:\Personal C# Project\Database BLOB Test\Database\dbBLOB.db;");
-        return new SQLiteConnection(@"Data Source=C:\Users\Kev\Desktop\Projects\Delivery Report System\Database\dbBLOB.db;");
+        return new SQLiteConnection(@"Data Source=C:\Users\Kev\Desktop\Projects\Delivery Report System\Database\SystemDB.db;");
         }
     }
 }
