@@ -13,42 +13,28 @@ namespace Controls
         private string driverName;
         private string weight;
         private string remarks;
-        private string date;
         private string screenshotLocation;
         private string screenshotName;
-        private string dateTime;
-        private byte[] imageData;
 
         private queryDeliveryDetailTable tableDeliveryDetail = new queryDeliveryDetailTable();
-        public processDBWrite(Dictionary<string, string> passedReportData)
+
+        public void writeDataToDB(Dictionary<string, string> reportDictionary)
         {
-            screenshotLocation = passedReportData["screenshotLocation"];
-            screenshotName = passedReportData["screenshotName"];
-            companyName = passedReportData["companyName"];
-            plateNumber = passedReportData["plateNumber"];
-            driverName = passedReportData["driverName"];
-            weight = passedReportData["weight"];
-            invoiceNumber = passedReportData["invoiceNumber"];
-            traceNumber = passedReportData["traceNumber"];
-            remarks = passedReportData["remarks"];
-        }
-        public void writeDataToDB()
-        {
-            executeImageWrite(tableDeliveryDetail.insertDeliveryDetail(screenshotName, driverName, companyName, plateNumber, invoiceNumber, traceNumber, remarks), 
+            retrieveDataFromDictionary(reportDictionary);
+            executeImageWrite(tableDeliveryDetail.insertDeliveryDetail(screenshotName.Replace(".jpg",""), driverName, companyName, plateNumber, invoiceNumber, traceNumber, remarks), 
                 (byte[])File.ReadAllBytes(screenshotLocation + screenshotName));
-            //writeImageToDB();
         }
-        private void writeImageToDB()
+        private void retrieveDataFromDictionary(Dictionary<string, string> reportDictionary)
         {
-            try
-            {
-                //imageData = File.ReadAllBytes(fullScreenshotFileName);
-                executeImageWrite(tableDeliveryDetail.addScreenshot(screenshotName), (byte[]) File.ReadAllBytes(screenshotLocation)); //imageData);
-            }
-            catch
-            {
-                throw;
-            }
-        }   
+            companyName = reportDictionary["companyName"];
+            plateNumber = reportDictionary["plateNumber"];
+            invoiceNumber = reportDictionary["invoiceNumber"];
+            traceNumber = reportDictionary["traceNumber"];
+            driverName = reportDictionary["driverName"];
+            weight = reportDictionary["weight"];
+            remarks = reportDictionary["remarks"];
+            screenshotName = reportDictionary["screenshotName"];
+            screenshotLocation = reportDictionary["screenshotLocation"];
+        }  
     }
 }

@@ -21,11 +21,10 @@ namespace Controls
         {
             return "DELETE FROM " + tableName + " WHERE Name='" + screenshotName + "'";
         }
-        public string insertDeliveryDetail(string dateTime, string driverName, string company, string truck, string invoiceNumber, string traceNumber, string remarks)
+        public string insertDeliveryDetail(string dateAndTime, string driverName, string company, string truck, string invoiceNumber, string traceNumber, string remarks)
         {
-            //return "INSERT INTO " + tableName + "(ID,Name,Data,Delete_Flag) VALUES (NULL,'" + screenshotName + "',@img,'N')";
             return "INSERT INTO DeliveryDetail (ID, DateTime, DriverName, CompanyName, TruckPlateNumber, Screenshot, InvoiceNumber, TraceNumber, Remark, Delete_Flag) VALUES (NULL,'" +
-                dateTime + "','" + driverName + "','" + company + "','" + truck + "',@img,'" + invoiceNumber + "','" + traceNumber + "','" + remarks + "','N')";
+                dateAndTime + "','" + driverName + "','" + company + "','" + truck + "',@img,'" + invoiceNumber + "','" + traceNumber + "','" + remarks + "','N')";
         }
     }
 }
