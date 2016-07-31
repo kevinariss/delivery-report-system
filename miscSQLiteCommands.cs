@@ -1,7 +1,8 @@
-using System.Data.SQLite;
+﻿using System.Data.SQLite;
 using System.Data;
+using System;
 
-namespace Database_Controls
+namespace Controls
 {
     public abstract class miscSQLiteCommands
     {
@@ -110,7 +111,7 @@ namespace Database_Controls
                 throw;
             }
         }
-        private void disconnectFromdb()
+        private void disconnectFromdb() 
         {
             try
             {
@@ -124,7 +125,7 @@ namespace Database_Controls
         }
         private SQLiteConnection sqliteConnection()
         {
-        return new SQLiteConnection(@"Data Source=C:\Users\Kev\Desktop\Projects\Delivery Report System\Database\SystemDB.db;");
+            return new SQLiteConnection(@"Data Source=D:\Projects\Delivery Report System\Database\SystemDB.db");
         }
     }
 }

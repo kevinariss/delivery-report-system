@@ -1,11 +1,11 @@
 ﻿using System.IO;
 
-namespace Database_Controls
+namespace Controls
 {
-    public class processDBReader : miscSQLiteCommands
+    public class processDBRead : miscSQLiteCommands
     {
         private byte[] imageData;
-        private queryScreenshotTable tableScreenshot = new queryScreenshotTable();
+        private queryDeliveryDetailTable tableScreenshot = new queryDeliveryDetailTable();
         public void readImageFromDB(int screenshotID, string fullOutputFilePath)
         {
             try
