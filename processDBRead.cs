@@ -2,7 +2,7 @@
 
 namespace Database_Controls
 {
-    public class processDBReader : miscSQLiteCommands
+    public class processDBRead : miscSQLiteCommands
     {
         private byte[] imageData;
         private queryScreenshotTable tableScreenshot = new queryScreenshotTable();
