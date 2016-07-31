@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace Controls
 {
     public class processImageSave
     {
-        public void saveScreenshot(Image image, string imagePath, string imageName)
+        private string imageLocation;
+        private string imageName;
+        public void saveScreenshot(Image screenshot, Dictionary<string, string> reportDictionary)
         {
-            image.Save(imagePath + imageName, System.Drawing.Imaging.ImageFormat.Jpeg);
-            //save to DB?
+            retrieveDataFromDictionary(reportDictionary);
+            screenshot.Save(imageLocation + imageName);
+        }
+        private void retrieveDataFromDictionary(Dictionary<string, string> reportDictionary)
+        {
+            imageLocation = reportDictionary["screenshotLocation"];
+            imageName = reportDictionary["screenshotName"];
         }
     }
 }

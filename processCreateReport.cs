@@ -6,8 +6,7 @@ namespace Controls
 {
     public class processCreateReport
     {
-
-        private Application msWordApp = new Application();
+        private Application msWordApp;
         private Document reportTemplate;
         private InlineShape screenshot;
         private string companyName;
@@ -19,54 +18,46 @@ namespace Controls
         private string remarks;
         private string date;
         private string screenshotLocation;
+        private string screenshotName;
 
-        //public processCreateReport(string passedscreenshotLocation, string passedCompanyName, string passedTraceNumber, string passedInvoiceNumber, string passedPlateNumber, string passedDriverName, string passedWeight, string passedRemarks)
-        //{
-        //    screenshotLocation = passedscreenshotLocation;
-        //    companyName = passedCompanyName;
-        //    plateNumber = passedPlateNumber;
-        //    driverName = passedDriverName;
-        //    weight = passedWeight;
-        //    invoiceNumber = passedInvoiceNumber;
-        //    traceNumber = passedTraceNumber;
-        //    remarks = passedRemarks;
-        //    date = DateTime.Today.ToString("D");
-
-        //}
-        public processCreateReport(Dictionary <string, string> passedReportData)
+        public void createReport(Dictionary<string, string> reportDictionary)
         {
-            screenshotLocation = passedReportData["screenshotLocation"];
-            companyName = passedReportData["companyName"];
-            plateNumber = passedReportData["plateNumber"];
-            driverName = passedReportData["driverName"];
-            weight = passedReportData["weight"];
-            invoiceNumber = passedReportData["invoiceNumber"];
-            traceNumber = passedReportData["traceNumber"];
-            remarks = passedReportData["remarks"];
-            date = passedReportData["date"]; 
-        }
-
-        public void createReport()
-        {
-            //query
+            retrieveDataFromDictionary(reportDictionary);
+            getWordApp();
             openReportTemplate();
             addDetails();
             insertScreenshot();
             resizeScreenshot();
             switchToPrintPreview();
-            showDocument();
+        }
+        private void retrieveDataFromDictionary(Dictionary<string, string> reportDictionary)
+        {
+            date = reportDictionary["date"];
+            companyName = reportDictionary["companyName"];
+            plateNumber = reportDictionary["plateNumber"];
+            invoiceNumber = reportDictionary["invoiceNumber"];
+            traceNumber = reportDictionary["traceNumber"];
+            driverName = reportDictionary["driverName"];
+            weight = reportDictionary["weight"];
+            remarks = reportDictionary["remarks"];
+            screenshotLocation = reportDictionary["screenshotLocation"];
+            screenshotName = reportDictionary["screenshotName"];
+        }
+        private void getWordApp()
+        {
+            msWordApp = new Application();
+            msWordApp.Visible = true;
         }
         private void openReportTemplate()
         {
-            reportTemplate = msWordApp.Documents.Open(@"D:\Projects\Delivery Report System\Report Template\Report Template.docx", ReadOnly: true, Visible: true);
+            reportTemplate = msWordApp.Documents.Open(@"D:\Projects\Delivery Report System\Report Template\Report Template.docx", ReadOnly: true);
         }
         private void addDetails()
         {
-            //string name = doc.Bookmarks["Name"].Range.Text = "Kevin";
             reportTemplate.Bookmarks["CompanyName"].Range.Text = companyName;
             reportTemplate.Bookmarks["Date"].Range.Text = date;
             reportTemplate.Bookmarks["DriverName"].Range.Text = driverName;
-            reportTemplate.Bookmarks["DriverNameAndDate"].Range.Text = driverName + "/" + date;
+            reportTemplate.Bookmarks["DriverNameAndDate"].Range.Text = driverName + " / " + date;
             reportTemplate.Bookmarks["InvoiceNumber"].Range.Text = invoiceNumber;
             reportTemplate.Bookmarks["PlateNumber"].Range.Text = plateNumber;
             reportTemplate.Bookmarks["Remarks"].Range.Text = remarks;
@@ -75,7 +66,7 @@ namespace Controls
         }
         private void insertScreenshot()
         {
-            screenshot = reportTemplate.Bookmarks["Screenshot"].Range.InlineShapes.AddPicture(screenshotLocation); //@"G:\Personal C# Project\Creating Output\Screenshot\Fist_Bite.JPG"
+            screenshot = reportTemplate.Bookmarks["Screenshot"].Range.InlineShapes.AddPicture(screenshotLocation + screenshotName);
         }
         private void resizeScreenshot()
         {
@@ -85,10 +76,6 @@ namespace Controls
         private void switchToPrintPreview()
         {
             msWordApp.PrintPreview = true;
-        }
-        private void showDocument()
-        {
-            msWordApp.Visible = true;
         }
     }
 }
