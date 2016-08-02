@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.Office.Interop.Word;
+﻿using Microsoft.Office.Interop.Word;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Controls
 {
@@ -28,7 +28,8 @@ namespace Controls
             addDetails();
             insertScreenshot();
             resizeScreenshot();
-            switchToPrintPreview();
+            saveDocumentAsPDF();
+            cleanup();
         }
         private void retrieveDataFromDictionary(Dictionary<string, string> reportDictionary)
         {
@@ -46,7 +47,6 @@ namespace Controls
         private void getWordApp()
         {
             msWordApp = new Application();
-            msWordApp.Visible = true;
         }
         private void openReportTemplate()
         {
@@ -73,9 +73,16 @@ namespace Controls
             screenshot.Height = 309;
             screenshot.Width = 449;
         }
-        private void switchToPrintPreview()
+        private void saveDocumentAsPDF()
         {
-            msWordApp.PrintPreview = true;
+            reportTemplate.SaveAs2(@"D:\Projects\Delivery Report System\Report Template\tempReport.pdf", WdSaveFormat.wdFormatPDF);
+            Process.Start(@"D:\Projects\Delivery Report System\Report Template\tempReport.pdf");
         }
+        private void cleanup()
+        {
+            msWordApp.Documents.Close(SaveChanges: false);
+            msWordApp.Quit();
+        }
+
     }
 }
